@@ -7,11 +7,12 @@
 
 (defn color->list
   ([hex-number] (color->list hex-number ()))
-  ([hex-number vector]
-     (cond
-      (= 0 hex-number) vector
-      :else (recur (quot hex-number (* 16 16))
-                   (conj vector (rem hex-number (* 16 16)))))))
+  ([hex-number result]
+     (let [hex-sq (* 16 16)]
+       (cond
+        (= 0 hex-number) result
+        :else (recur (quot hex-number hex-sq)
+                     (conj result (rem hex-number hex-sq)))))))
 
 (defn list->color [[r g b]]
   (format "#%02x%02x%02x" r g b))
